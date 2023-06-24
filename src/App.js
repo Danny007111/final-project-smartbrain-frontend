@@ -16,7 +16,7 @@ function App() {
 
   return (
       <div className="App">
-          <Particles options={particlesOptions} init={particlesInit}/>
+          <Particles className='particles' options={particlesOptions} init={particlesInit}/>
           <Navigation />
           <Logo />
           <Rank />
