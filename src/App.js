@@ -30,6 +30,22 @@ import { loadFull } from "tsparticles";
 
 
 class App extends Component {
+  constructor(){
+    super();
+    this.state = {
+      input: '',
+    }
+  }
+  // when trying to use function onInputChange we have to use "this." to acces the function of App before it renders.
+  onInputChange = (event) => {
+    // the way we get a value is 'event.target.value'
+    console.log(event.target.value);
+  }
+
+  onButtonSubmit = () => {
+    console.log('click');
+  }
+
   render() {
     return (
     <div className="App">
@@ -37,7 +53,9 @@ class App extends Component {
       <Navigation />
       <Logo />
       <Rank />
-      <ImageLinkForm />
+      <ImageLinkForm 
+      onInputChange={this.onInputChange} 
+      onButtonSubmit={this.onButtonSubmit} />
       {/* <FaceRecognition /> */}
     </div>
     );
