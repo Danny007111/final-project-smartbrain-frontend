@@ -10,9 +10,6 @@ import { loadFull } from 'tsparticles';
 import FaceRecognition from './components/FaceRecognition/FaceRecognition';
 // import Clarifai from 'clarifai';
 
-
-
-
 // const app = new Clarifai.App({
 //   apiKey: '931a184388594bb8b6e6f16e7e6f1697'
 //  });
@@ -58,18 +55,45 @@ const returnClarifaiRequestOptions = (imageUrl) => {
 
   return requestOptions;
 }
+
 // -------------------------------
- 
 
 class App extends Component {
   constructor(){
     super();
     this.state = {
+      // text box input
       input: '',
-      imageUrl: ''
-      // https://samples.clarifai.com/metro-north.jpg
+      // https://samples.clarifai.com/metro-north.jpg , https://samples.clarifai.com/brangelina_video_3_1fps.jpeg ,
+      imageUrl: '',
+      // holds value/s of faces(squares) found on photo.
+      box: {}
     }
   }
+  ////----------------------------------
+
+  calculateFaceLoation = (data) => {
+    const clarifaiFace = data.outputs[0].data.regions[0].region_info.bounding_box;
+    // const clarifaiFace = data.outputs[0].data.regions[0].data.region_info.bounding_box;
+    const image = document.getElementById("inputImage");
+    const width = Number(image.width);
+    const height = Number(image.height);
+    return {
+      leftCol: clarifaiFace.left_col * width,
+      topRow: clarifaiFace.top_row * height,
+      rightCol: width - (clarifaiFace.right_col * width),
+      bottomRow: height - (clarifaiFace.bottom_row * height)
+    }
+    
+  }
+  ////-----------------------------------
+  displayFaceBox = (box) => {
+    this.setState({box: box});
+    debugger;
+
+  }
+
+
   // when trying to use function onInputChange we have to use "this." to acces the function of App before it renders.
   onInputChange = (event) => {
     // the way we get a value is 'event.target.value'
@@ -80,32 +104,17 @@ class App extends Component {
     // when button is pressed input becomes imageUrl and executes code.
     this.setState({imageUrl: this.state.input});
 
-        // NOTE: MODEL_VERSION_ID is optional, you can also call prediction with the MODEL_ID only
-    // https://api.clarifai.com/v2/models/{YOUR_MODEL_ID}/outputs
-    // this will default to the latest version_id
-
     fetch("https://api.clarifai.com/v2/models/face-detection/versions/6dc7e46bc9124c5c8824be4822abe105/outputs", returnClarifaiRequestOptions(this.state.input))
     .then(response => response.json())
     .then(response => {
-      console.log('hi', response.outputs[0].data.regions[0].region_info.bounding_box)
-      // if (response) {
-      //   fetch('http://localhost:3000/image', {
-      //     method: 'put', 
-      //     headers: {'Content-Type': 'application/json'},
-      //     body: JSON.stringify({
-      //       // id: this.state.user.id
-      //     })
-      //   })
-      //   .then(responce => response.json())
-      //   .then(count => {
-      //     this.setState(Object.assign(this.state.user, {entries: count}))
-      //   })
+      // close att. We have response being catched by calculateFaceLocation
+      // console.log(response)
+      this.displayFaceBox(this.calculateFaceLoation(response));
       }
     )
-    .catch((error) => console.log('error', error))
+    .catch((error) => console.log('error', error));
 
-
-// old clarify_______________VVVVVVVVVVVVVVVVV______________
+  //// old clarify_______________VVVVVVVVVVVVVVVVV______________
     // app.models.predict(Clarifai.FACE_DETECT_MODEL, this.state.input)
     // .then( 
     //   function(responce){
@@ -116,7 +125,7 @@ class App extends Component {
     //     // there was an error
     //   }
     // );
-// ______________________________________________________      
+  ////__________________________________________________________      
   }
 
   render() {
@@ -127,10 +136,11 @@ class App extends Component {
       <Logo />
       <Rank />
       <ImageLinkForm onInputChange={this.onInputChange} onButtonSubmit={this.onButtonSubmit} />
-      <FaceRecognition imageUrl={this.state.imageUrl}/>
+      <FaceRecognition box={this.state.box} imageUrl={this.state.imageUrl}/>
     </div>
     );
-  }
+  };
+
 }
 
 export default App;
