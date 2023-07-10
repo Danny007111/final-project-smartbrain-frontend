@@ -7,9 +7,10 @@
     cursor: pointer;
     
     
-    
+}
 
-    
+.hideImg {
+    display: none;
 }
 
 

@@ -8,6 +8,7 @@ import particlesOptions from './particles.json';
 import Particles from 'react-particles';
 import { loadFull } from 'tsparticles';
 import FaceRecognition from './components/FaceRecognition/FaceRecognition';
+import SignIn from './components/SignIn/SignIn';
 // import Clarifai from 'clarifai';
 
 // const app = new Clarifai.App({
@@ -89,7 +90,6 @@ class App extends Component {
   ////-----------------------------------
   displayFaceBox = (box) => {
     this.setState({box: box});
-    debugger;
 
   }
 
@@ -131,7 +131,8 @@ class App extends Component {
   render() {
     return (
     <div className="App">
-      <Particles className='particles' options={particlesOptions} init={loadFull}/>      
+      <Particles className='particles' options={particlesOptions} init={loadFull}/>  
+      <SignIn />    
       <Navigation />
       <Logo />
       <Rank />
