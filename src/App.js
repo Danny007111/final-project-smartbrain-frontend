@@ -16,6 +16,7 @@ import SignIn from './components/SignIn/SignIn';
 //  });
 
 
+
 // ------------------------------------
 const returnClarifaiRequestOptions = (imageUrl) => {
       // Your PAT (Personal Access Token) can be found in the portal under Authentification
@@ -68,7 +69,9 @@ class App extends Component {
       // https://samples.clarifai.com/metro-north.jpg , https://samples.clarifai.com/brangelina_video_3_1fps.jpeg ,
       imageUrl: '',
       // holds value/s of faces(squares) found on photo.
-      box: {}
+      box: {},
+      // keeps track of where we are at in the page
+      route: 'signin'
     }
   }
   ////----------------------------------
@@ -90,9 +93,8 @@ class App extends Component {
   ////-----------------------------------
   displayFaceBox = (box) => {
     this.setState({box: box});
-
   }
-
+  ////-----------------------------------
 
   // when trying to use function onInputChange we have to use "this." to acces the function of App before it renders.
   onInputChange = (event) => {
@@ -112,9 +114,9 @@ class App extends Component {
       this.displayFaceBox(this.calculateFaceLoation(response));
       }
     )
-    .catch((error) => console.log('error', error));
-
-  //// old clarify_______________VVVVVVVVVVVVVVVVV______________
+    .catch((error) => console.log('error', error));  
+  }
+   //// old clarify_______________VVVVVVVVVVVVVVVVV______________
     // app.models.predict(Clarifai.FACE_DETECT_MODEL, this.state.input)
     // .then( 
     //   function(responce){
@@ -125,23 +127,31 @@ class App extends Component {
     //     // there was an error
     //   }
     // );
-  ////__________________________________________________________      
+  ////__________________________________________________________    
+
+  onRouteChange = () => {
+    this.setState({route: 'home'})
   }
+  
 
   render() {
     return (
     <div className="App">
-      <Particles className='particles' options={particlesOptions} init={loadFull}/>  
-      <SignIn />    
-      <Navigation />
-      <Logo />
-      <Rank />
-      <ImageLinkForm onInputChange={this.onInputChange} onButtonSubmit={this.onButtonSubmit} />
-      <FaceRecognition box={this.state.box} imageUrl={this.state.imageUrl}/>
+      
+      <Particles className='particles' options={particlesOptions} init={loadFull}/> 
+      <Navigation /> 
+      { this.state.route === 'signin' 
+      ? <SignIn onRouteChange={this.onRouteChange} />   
+      : <div>
+          <Logo />
+          <Rank />
+          <ImageLinkForm onInputChange={this.onInputChange} onButtonSubmit={this.onButtonSubmit} />
+          <FaceRecognition box={this.state.box} imageUrl={this.state.imageUrl}/>
+          </div>
+      }
     </div>
     );
   };
-
 }
 
 export default App;
