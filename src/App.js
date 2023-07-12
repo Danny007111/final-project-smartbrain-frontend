@@ -129,8 +129,8 @@ class App extends Component {
     // );
   ////__________________________________________________________    
 
-  onRouteChange = () => {
-    this.setState({route: 'home'})
+  onRouteChange = (route) => {
+    this.setState({route: route})
   }
   
 
@@ -139,7 +139,7 @@ class App extends Component {
     <div className="App">
       
       <Particles className='particles' options={particlesOptions} init={loadFull}/> 
-      <Navigation /> 
+      <Navigation onRouteChange={this.onRouteChange} /> 
       { this.state.route === 'signin' 
       ? <SignIn onRouteChange={this.onRouteChange} />   
       : <div>
