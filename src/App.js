@@ -80,6 +80,15 @@ class App extends Component {
   }
   ////----------------------------------
 
+  componentDidMount() {
+    fetch('http://localhost:3000')
+    .then(response => response.json())
+    .then(data => console.log(data))
+    // could do .then(console.log)to log out "data"
+  }
+
+  ////----------------------------------
+
   calculateFaceLoation = (data) => {
     const clarifaiFace = data.outputs[0].data.regions[0].region_info.bounding_box;
     // const clarifaiFace = data.outputs[0].data.regions[0].data.region_info.bounding_box;
