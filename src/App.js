@@ -80,12 +80,12 @@ class App extends Component {
   }
   ////----------------------------------
 
-  componentDidMount() {
-    fetch('http://localhost:3000')
-    .then(response => response.json())
-    .then(data => console.log(data))
-    // could do .then(console.log)to log out "data"
-  }
+  // componentDidMount() {
+  //   fetch('http://localhost:3000')
+  //   .then(response => response.json())
+  //   .then(data => console.log(data))
+  //   // could do .then(console.log)to log out "data"
+  // }
 
   ////----------------------------------
 
