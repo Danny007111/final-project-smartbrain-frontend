@@ -17,8 +17,7 @@ import Register from './components/Register/Register';
 //   apiKey: '931a184388594bb8b6e6f16e7e6f1697'
 //  });
 
-
-
+// Clarifai face detection api 06/2023
 // ------------------------------------
 const returnClarifaiRequestOptions = (imageUrl) => {
       // Your PAT (Personal Access Token) can be found in the portal under Authentification
@@ -75,9 +74,29 @@ class App extends Component {
       // keeps track of where we are at in the page
       route: 'signin',
       //sign in state
-      isSignedIn: false
+      isSignedIn: false,
+      //register.js (user) 
+      user: {
+        id: '',
+        name: '',
+        email: '',
+        entries: 0,
+        joined: ''
+      }
     }
   }
+  // register.js ---VVVV
+  ////----------------------------------
+  loadUser = (data) => {
+    this.setState({user: {
+      id: data.id,
+      name: data.name,
+      email: data.email,
+      entries: data.entries,
+      joined: data.joined
+    }})
+  }
+  
   ////----------------------------------
 
   // componentDidMount() {
@@ -87,7 +106,7 @@ class App extends Component {
   //   // could do .then(console.log)to log out "data"
   // }
 
-  ////----------------------------------
+  ////---------------CLARIFAI-------------------VVV
 
   calculateFaceLoation = (data) => {
     const clarifaiFace = data.outputs[0].data.regions[0].region_info.bounding_box;
@@ -103,7 +122,7 @@ class App extends Component {
     }
     
   }
-  ////-----------------------------------
+  ////----------------CLARIFAI-------------------VVV
   displayFaceBox = (box) => {
     this.setState({box: box});
   }
@@ -122,9 +141,23 @@ class App extends Component {
     fetch("https://api.clarifai.com/v2/models/face-detection/versions/6dc7e46bc9124c5c8824be4822abe105/outputs", returnClarifaiRequestOptions(this.state.input))
     .then(response => response.json())
     .then(response => {
+      if(response) {
+        fetch('http://localhost:3000/image', {
+          method: 'put',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({
+            id: this.state.user.id
+            })
+        })
+        .then(response => response.json())
+        .then(count => {
+          // Object.assign ----(where, {what})---- targets only specific values so the whole user is not modified to have other entries as "undefined" (nothing, blank!)
+          this.setState(Object.assign(this.state.user, {entries: count}))
+        })
+      }
       // close att. We have response being catched by calculateFaceLocation
-      // console.log(response)
       this.displayFaceBox(this.calculateFaceLoation(response));
+
       }
     )
     .catch((error) => console.log('error', error));  
@@ -161,14 +194,14 @@ class App extends Component {
         { route === 'home' 
         ? <div>
             <Logo />
-            <Rank />
+            <Rank name={this.state.user.name} entries={this.state.user.entries}/>
             <ImageLinkForm onInputChange={this.onInputChange} onButtonSubmit={this.onButtonSubmit} />
             <FaceRecognition box={box} imageUrl={imageUrl}/>
           </div>
         : (
             route === 'signin' 
-            ? <SignIn onRouteChange={this.onRouteChange} />   
-            : <Register onRouteChange={this.onRouteChange} />   
+            ? <SignIn loadUser={this.loadUser} onRouteChange={this.onRouteChange} />   
+            : <Register loadUser={this.loadUser} onRouteChange={this.onRouteChange} />   
           )
         }
       </div>
