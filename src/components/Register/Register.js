@@ -35,7 +35,8 @@ class Register extends React.Component {
             .then(response => response.json())
             .then(user => {
                 // need to create user in app.js inside constructor!
-                if (user) {
+                // user".id" (id) added for security!!!!
+                if (user.id) {
                     // creating "user update" -used-props-because function is on app.js
                     this.props.loadUser(user)
                     this.props.onRouteChange('home')
