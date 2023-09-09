@@ -148,7 +148,7 @@ class App extends Component {
     // ---------------Sent to back end---VV("imageurl")VV---------------------
     // fetch("https://api.clarifai.com/v2/models/face-detection/versions/6dc7e46bc9124c5c8824be4822abe105/outputs", returnClarifaiRequestOptions(this.state.input))
     // -----------------------------------------------------------
-    fetch('http://localhost:3000/imageurl', {
+    fetch('https://tranquil-sands-81983-05b45b394409.herokuapp.com/imageurl', {
       method: 'post',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({
@@ -161,7 +161,8 @@ class App extends Component {
     .then(response => {
       console.log(response)
       if(response) {
-        fetch('http://localhost:3000/image', {
+        
+        fetch('https://tranquil-sands-81983-05b45b394409.herokuapp.com/image', {
           method: 'put',
           headers: {'Content-Type': 'application/json'},
           body: JSON.stringify({
