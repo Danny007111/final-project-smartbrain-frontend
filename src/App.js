@@ -162,7 +162,7 @@ class App extends Component {
       console.log(response)
       if(response) {
         
-        fetch('https://smartbrain-api-srq6.onrender.com/image', {
+        fetch('dpg-cjvngdh5mpss7395g650-a.oregon-postgres.render.com/image', {
           method: 'put',
           headers: {'Content-Type': 'application/json'},
           body: JSON.stringify({
