@@ -148,7 +148,7 @@ class App extends Component {
     // ---------------Sent to back end---VV("imageurl")VV---------------------
     // fetch("https://api.clarifai.com/v2/models/face-detection/versions/6dc7e46bc9124c5c8824be4822abe105/outputs", returnClarifaiRequestOptions(this.state.input))
     // -----------------------------------------------------------
-    fetch('dpg-cjvngdh5mpss7395g650-a.oregon-postgres.render.com/imageurl', {
+    fetch('https://smartbrain-api-srq6.onrender.com/imageurl', {
       method: 'post',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({
@@ -162,7 +162,7 @@ class App extends Component {
       console.log(response)
       if(response) {
         
-        fetch('dpg-cjvngdh5mpss7395g650-a.oregon-postgres.render.com/image', {
+        fetch('https://smartbrain-api-srq6.onrender.com/image', {
           method: 'put',
           headers: {'Content-Type': 'application/json'},
           body: JSON.stringify({
