@@ -116,29 +116,19 @@ class App extends Component {
   ////---------------CLARIFAI-------------------VVV
 
   calculateFaceLoation = (data) => {
-    // const clarifaiFace = data.outputs[0].data.regions[0].data.region_info.bounding_box;
-    
-    const image = document.getElementById("inputImage");
-    const width = Number(image.width);
-    const height = Number(image.height);
-    
-    // for each |||||data.outputs[0].data.regions||||| we have to get each ||||| .region_info.bounding_box |||||
-    for (region of data.outputs[0].data.regions) {
-      let clarifaiFace = region.region_info.bounding_box
-      return {
-        leftCol: clarifaiFace.left_col * width,
-        topRow: clarifaiFace.top_row * height,
-        rightCol: width - (clarifaiFace.right_col * width),
-        bottomRow: height - (clarifaiFace.bottom_row * height)
-      }
-    }
-
+    return data.outputs[0].data.regions;
+    // const clarifaiFace = data.outputs[0].data.regions[0].region_info.bounding_box;
+    // // const clarifaiFace = data.outputs[0].data.regions[0].data.region_info.bounding_box;
+    // const image = document.getElementById("inputImage");
+    // const width = Number(image.width);
+    // const height = Number(image.height);
     // return {
     //   leftCol: clarifaiFace.left_col * width,
     //   topRow: clarifaiFace.top_row * height,
     //   rightCol: width - (clarifaiFace.right_col * width),
     //   bottomRow: height - (clarifaiFace.bottom_row * height)
-    // }    
+    // }
+    
   }
   ////----------------CLARIFAI-------------------VVV
   displayFaceBox = (boxes) => {
