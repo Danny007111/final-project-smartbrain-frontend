@@ -1,9 +1,9 @@
 import React from "react";
 import "./ImageLinkForm.css";
 
-const ImageLinkForm = ({onInputChange, onButtonSubmit, onButtonClear}) => {
+const ImageLinkForm = ({onInputChange, onButtonSubmit}) => {
     return (
-        <div>
+        <form>
 
            <p className="f3">
             {'This Magic will detect faces in pictures. Give it a try!'}
@@ -17,16 +17,17 @@ const ImageLinkForm = ({onInputChange, onButtonSubmit, onButtonClear}) => {
                 onChange={onInputChange} />
                 
                 <button 
-                className="w-30 grow f4 link ph3 pv2 dib white bg-light-purple text-inside" 
+                type="submit"
+                className="w-30 grow f4 link ph3 pv2 dib white bg-light-purple" 
                 onClick={onButtonSubmit}>Detect</button>
 
                 <button 
-                className="w-30 grow f4 link ph3 pv2 dib white bg-light-purple" 
-                onClick={onButtonClear}>Clear</button>
+                type="reset"
+                className="w-30 grow f4 link ph3 pv2 dib white bg-light-purple">Clear</button>
             </div>
            </div>
 
-        </div>
+        </form>
     );
 }
 
