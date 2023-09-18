@@ -235,7 +235,10 @@ class App extends Component {
     }
     this.setState({route: route})
   }
-  
+
+  onButtonClear = () => {
+    this.setState({input: ''});
+  }
 
   render() {
 
@@ -281,7 +284,7 @@ class App extends Component {
         ? <div>
             <Logo />
             <Rank name={this.state.user.name} entries={this.state.user.entries}/>
-            <ImageLinkForm onInputChange={this.onInputChange} onButtonSubmit={this.onButtonSubmit} />
+            <ImageLinkForm onInputChange={this.onInputChange} onButtonSubmit={this.onButtonSubmit} onButtonClear={this.onButtonClear} />
             <FaceRecognition boxes={boxes} imageUrl={imageUrl}/>
           </div>
         : (
