@@ -22,6 +22,7 @@ class SignIn extends React.Component {
     //-------------------------------------------
     
         fetch('https://smartbrain-api-srq6.onrender.com/signin', {
+        // (Local)fetch('http://localhost:3000/signin', {)
             method: 'post',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
