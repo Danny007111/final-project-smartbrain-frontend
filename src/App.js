@@ -236,8 +236,6 @@ class App extends Component {
     this.setState({route: route})
   }
 
-
-
   render() {
 
     let config = {
