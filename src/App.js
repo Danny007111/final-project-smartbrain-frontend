@@ -236,9 +236,7 @@ class App extends Component {
     this.setState({route: route})
   }
 
-  // onButtonClear = () => {
-  //   document.getElementById("text-inside").reset();
-  // }
+
 
   render() {
 
