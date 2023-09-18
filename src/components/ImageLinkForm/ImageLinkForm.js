@@ -3,7 +3,7 @@ import "./ImageLinkForm.css";
 
 const ImageLinkForm = ({onInputChange, onButtonSubmit}) => {
     return (
-        <form>
+        <div>
 
            <p className="f3">
             {'This Magic will detect faces in pictures. Give it a try!'}
@@ -21,13 +21,14 @@ const ImageLinkForm = ({onInputChange, onButtonSubmit}) => {
                 className="w-30 grow f4 link ph3 pv2 dib white bg-light-purple" 
                 onClick={onButtonSubmit}>Detect</button>
 
-                <button 
+                {/* <button 
                 type="reset"
-                className="w-30 grow f4 link ph3 pv2 dib white bg-light-purple">Clear</button>
+                className="w-30 grow f4 link ph3 pv2 dib white bg-light-purple">Clear</button> */}
             </div>
+            
            </div>
 
-        </form>
+        </div>
     );
 }
 
