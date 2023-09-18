@@ -237,7 +237,7 @@ class App extends Component {
   }
 
   onButtonClear = () => {
-    this.setState({input: ''});
+    document.getElementById("text-inside").reset();
   }
 
   render() {
