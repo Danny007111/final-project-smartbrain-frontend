@@ -177,8 +177,8 @@ class App extends Component {
     // ---------------Sent to back end---VV("imageurl")VV---------------------
     // fetch("https://api.clarifai.com/v2/models/face-detection/versions/6dc7e46bc9124c5c8824be4822abe105/outputs", returnClarifaiRequestOptions(this.state.input))
     // -----------------------------------------------------------
-    // fetch('https://smartbrain-api-srq6.onrender.com/imageurl', {
-    fetch('http://localhost:3000/imageurl', {
+    fetch('https://smartbrain-api-srq6.onrender.com/imageurl', {
+    // fetch('http://localhost:3000/imageurl', {
       method: 'post',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({
@@ -192,8 +192,8 @@ class App extends Component {
      
       if(response) {
         
-        // fetch('https://smartbrain-api-srq6.onrender.com/image', {
-        fetch('http://localhost:3000/image', {
+        fetch('https://smartbrain-api-srq6.onrender.com/image', {
+        // fetch('http://localhost:3000/image', {
           method: 'put',
           headers: {'Content-Type': 'application/json'},
           body: JSON.stringify({
@@ -234,6 +234,10 @@ class App extends Component {
       this.setState({isSignedIn: true})
     }
     this.setState({route: route})
+  }
+
+  handleClear = () => {
+    document.getElementById("text-inside").value = '';
   }
 
   render() {
@@ -280,7 +284,7 @@ class App extends Component {
         ? <div>
             <Logo />
             <Rank name={this.state.user.name} entries={this.state.user.entries}/>
-            <ImageLinkForm onInputChange={this.onInputChange} onButtonSubmit={this.onButtonSubmit} />
+            <ImageLinkForm onInputChange={this.onInputChange} onButtonSubmit={this.onButtonSubmit} handleClear={this.handleClear}/>
             <FaceRecognition boxes={boxes} imageUrl={imageUrl}/>
           </div>
         : (
